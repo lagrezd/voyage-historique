@@ -4,6 +4,8 @@ const helmet = require('helmet');
 const cors = require('cors');
 
 const app = express();
+const middlewares = require('./middlewares');
+
 app.use(morgan('common'));
 app.use(helmet());
 app.use(
@@ -18,21 +20,10 @@ app.get('/', (req, res) => {
   });
 });
 
-app.use((req, res, next) => {
-  const error = new Error(`Not Found - ${req.orginalUrl}`);
-  res.status(404);
-  next(error);
-});
+app.use(middlewares.notFound);
 
 // eslint-disable-next-line no-unused-vars
-app.use((error, req, res, next) => {
-  const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
-  res.status(statusCode);
-  res.json({
-    message: error.message,
-    stack: process.env.NODE_ENV === 'production' ? '' : error.stack
-  });
-});
+app.use(middlewares.errorHandler);
 
 const port = process.env.PORT || 1337;
 
