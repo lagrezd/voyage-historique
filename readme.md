@@ -8,7 +8,7 @@ A full stack application to store / list places you have traveled.
   - [x] Install Dependencies (express, morgan, helmet, cors, nodemon)
   - [x] Install / Setup Linter (ESLint)
   - [x] Setup Express App
-  - [ ] Setup Not Found and Error Middlewares
+  - [x] Setup Not Found and Error Middlewares
 - [ ] Model DB
   - [ ] What data will we store ?
 - [ ] Setup Mongoose Model(s)
@@ -20,3 +20,4 @@ A full stack application to store / list places you have traveled.
 - [ ] Create Form to add a new entries
 - [ ] Setup Map SDK on client
 - [ ] List all log entries on map
+- DEPLOY !
