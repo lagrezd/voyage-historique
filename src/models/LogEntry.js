@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const { Schema } = mongoose;
 
 const requiredNumber = {
@@ -10,7 +11,7 @@ const logEntrySchema = new Schema(
   {
     title: {
       type: String,
-      require: true
+      required: true
     },
     description: String,
     comments: String,
@@ -22,18 +23,18 @@ const logEntrySchema = new Schema(
       default: 0
     },
     latitude: {
-      requiredNumber,
+      ...requiredNumber,
       min: -90,
       max: 90
     },
     longitude: {
-      requiredNumber,
+      ...requiredNumber,
       min: -180,
       max: 180
     },
     visitDate: {
-      type: Date,
-      required: true
+      required: true,
+      type: Date
     }
   },
   {
@@ -41,5 +42,6 @@ const logEntrySchema = new Schema(
   }
 );
 
-const LogEntry = mongoose.model('logEntry', logEntrySchema);
+const LogEntry = mongoose.model('LogEntry', logEntrySchema);
+
 module.exports = LogEntry;

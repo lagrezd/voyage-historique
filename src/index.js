@@ -7,12 +7,16 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 const middlewares = require('./middlewares');
+const logs = require('./api/logs');
 
 const app = express();
-
-mongoose.connect(process.env.DATABASE_URL, {
-  useNewUrlParser: true
-});
+console.log(process.env.DATABASE_URL);
+mongoose
+  .connect(process.env.DATABASE_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .catch(err => console.log(err));
 
 app.use(morgan('common'));
 app.use(helmet());
@@ -21,6 +25,7 @@ app.use(
     origin: process.env.CORS_ORIGIN
   })
 );
+app.use(express.json());
 
 app.get('/', (req, res) => {
   res.json({
@@ -28,9 +33,9 @@ app.get('/', (req, res) => {
   });
 });
 
-app.use(middlewares.notFound);
+app.use('/api/logs', logs);
 
-// eslint-disable-next-line no-unused-vars
+app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
 
 const port = process.env.PORT || 1337;
